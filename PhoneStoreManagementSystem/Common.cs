@@ -14,7 +14,7 @@ namespace PhoneStoreManagementSystem {
         private static string connectionString = "Data Source=.;Initial Catalog=PhoneStore;Integrated Security=True;Trust Server Certificate=True";
         private static SqlConnection createDataBaseConnection() {
             return new SqlConnection(connectionString);
-        } 
+        }
 
         public static SqlCommand CreateCommand(string Query) {
             return new SqlCommand {
@@ -123,7 +123,7 @@ namespace PhoneStoreManagementSystem {
                                 SELECT 1 FROM Customer WHERE ID = @userID
                             )";
             SqlCommand cmd = CreateCommand(Query);
-            
+
 
             cmd.Parameters.AddWithValue("@userID", user.userID);
             cmd.Parameters.AddWithValue("@userName", user.userName);
@@ -166,6 +166,54 @@ namespace PhoneStoreManagementSystem {
             string Query = @"select * from Phones";
             DataTable dt = ExecQuery(Query);
             return dt;
+        }
+
+        public static void AddPhone(Phone phone) {
+            string Query = @"
+                            INSERT INTO Phones (Brand, Model, Name, Ram, Storage, Price, Stock)
+                            SELECT @Brand, @Model, @Name, @Ram, @Storage, @Price, @Stock
+                            WHERE NOT EXISTS (
+                                SELECT 1 FROM Phones 
+                                WHERE Brand = @Brand 
+                                AND Model = @Model 
+                                AND Ram = @Ram 
+                                AND Storage = @Storage
+                            )";
+            SqlCommand cmd = CreateCommand(Query);
+            cmd.Parameters.AddWithValue("@Brand", phone.Brand);
+            cmd.Parameters.AddWithValue("@Model", phone.Model);
+            cmd.Parameters.AddWithValue("@Name", phone.Name);
+            cmd.Parameters.AddWithValue("@Ram", phone.Ram);
+            cmd.Parameters.AddWithValue("@Storage", phone.Storage);
+            cmd.Parameters.AddWithValue("@Price", phone.Price);
+            cmd.Parameters.AddWithValue("@Stock", 0);
+            ExecNonQuery(cmd);
+            
+
+        }
+        public static void DeleteDevice(string Model, int Ram, int Storage) {
+            string Query = @"delete from Phones 
+                            where Model = @Model and Ram = @Ram and Storage = @Storage";
+            SqlCommand cmd = CreateCommand(Query);
+
+            cmd.Parameters.AddWithValue("@Model", Model);
+            cmd.Parameters.AddWithValue("@Ram", Ram);
+            cmd.Parameters.AddWithValue("@Storage", Storage);
+            ExecNonQuery(cmd);
+        }
+
+        public static void UpdatePrice(string Model, int Ram, int Storage, int Price) {
+            string Query = @"update Phones
+                            set Price = @Price
+                            where Model = @Model and Ram = @Ram and Storage = @Storage";
+            SqlCommand cmd = CreateCommand(Query);
+
+            cmd.Parameters.AddWithValue("@Model", Model);
+            cmd.Parameters.AddWithValue("@Ram", Ram);
+            cmd.Parameters.AddWithValue("@Storage", Storage);
+            cmd.Parameters.AddWithValue("@Price", Price);
+            ExecNonQuery(cmd);
+
         }
         //Make box for Numbers only
 

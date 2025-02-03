@@ -1,0 +1,181 @@
+﻿<Page x:Class="PhoneStoreManagementSystem.EditPhone"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:PhoneStoreManagementSystem"
+      mc:Ignorable="d"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      Title="Edit Phone">
+
+    <Grid Background="White">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="0.25*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <!--Brand Field-->
+        <Grid Grid.Row="1"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center"
+              Margin="10,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- Label -->
+            <Label Content="Brand: "
+                   Style="{StaticResource lStyle}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   Grid.Column="0" />
+
+            <!-- ComboBox fills the remaining space -->
+            <Label Name="brandLabel"
+                   Style="{StaticResource lStyle}"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Center"
+                   Grid.Column="1" />
+        </Grid>
+
+        <!--Model Field-->
+        <Grid Grid.Row="1"
+              Grid.Column="2"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center"
+              Margin="10,0,10,0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- Label -->
+            <Label Content="Model : "
+                   Style="{StaticResource lStyle}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   Grid.Column="0" />
+
+            <!-- ComboBox fills the remaining space -->
+            <Label Name="modelLabel"
+                   Style="{StaticResource lStyle}"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Center"
+                   Grid.Column="1" />
+        </Grid>
+
+
+        <!--Ram-->
+        <Grid Grid.Row="3"
+              Grid.Column="0"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center"
+              Margin="10,0,10,0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- Label -->
+            <Label Content="Ram : "
+                   Style="{StaticResource lStyle}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   Grid.Column="0" />
+
+            <!-- ComboBox fills the remaining space -->
+            <Label Name="ramLabel"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Center"
+                   Grid.Column="1" />
+        </Grid>
+
+        <Grid Grid.Row="3"
+              Grid.Column="2"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center"
+              Margin="10,0,10,0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- Label -->
+            <Label Content="Storage : "
+                   Style="{StaticResource lStyle}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   Grid.Column="0" />
+
+            <!-- ComboBox fills the remaining space -->
+            <Label Name="storageLabel"
+                   Style="{StaticResource lStyle}"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Center"
+                   Grid.Column="1" />
+        </Grid>
+        <Grid Grid.Row="4"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center"
+              Grid.ColumnSpan="3">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+
+            </Grid.ColumnDefinitions>
+            <Label Content="Old Price : "
+                   Style="{StaticResource lStyle}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   Grid.Column="0" />
+            <Label Content="0"
+                   Name ="OldPrice"
+                   Style="{StaticResource lStyle}"
+                   Grid.Column="1" />
+
+            <Label Content="New Price : "
+                   Grid.Column="2"
+                   Style="{StaticResource lStyle}" />
+            <TextBox x:Name="NewPrice"
+                     FontSize="30"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Center"
+                     Grid.Column="3"
+                     
+                     DataObject.Pasting="NPricePasting"
+                     PreviewKeyDown="NPricePreviewKeyDown"
+                     PreviewTextInput="NPricePreviewKeyDown" />
+
+
+        </Grid>
+
+        <Button Content="Delete"
+                Width="230"
+                Grid.Row="5"
+                Name="DeleteDevice"
+                Click="DeleteDeviceBtn"
+                Grid.ColumnSpan="1" />
+        <Button Content="Edit"
+                Width="230"
+                Grid.Row="5"
+                Name="EditDevice"
+                Click="EditDeviceBtn"
+                Grid.Column="2"
+                Grid.ColumnSpan="1" />
+        
+    </Grid>
+
+</Page>

@@ -90,13 +90,9 @@ namespace PhoneStoreManagementSystem
 
 
                         DataRow row = (grid.SelectedItem as DataRowView).Row;
-                        int quan = (int)row["Stock"];
 
-                        if((int)row["Stock"] == 0) {
-                            MessageBox.Show("This item is out of stock!");
-                            return;
-                        }
-                        ItemsCart.Instance.AddPhoneToCart(row);
+                        if(Home.IsAdmin)HandleAdmin(row);
+                        else HandleCashier(row);
 
                     }
                 }
@@ -104,6 +100,30 @@ namespace PhoneStoreManagementSystem
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
             } 
+        }
+        private void HandleAdmin(DataRow row) {
+            CustomMessageBox msgBox = new CustomMessageBox();
+            if (msgBox.ShowDialog() == true) {
+                var choice= msgBox.SelectedOption;
+                if(choice == CustomMessageBox.UserChoice.AddToCart) {
+                    HandleCashier(row);
+                }else if(choice == CustomMessageBox.UserChoice.Edit) {
+                    Phone phone = new Phone((string)row["Brand"], (string)row["Model"], (string)row["Name"], (int)row["Ram"], (int)row["Storage"], (int)row["Price"]);
+                    Console.WriteLine($"{phone.Brand}, {phone.Model}, {phone.Ram}, {phone.Storage}");
+                    this.NavigationService.Navigate(new EditPhone(phone));
+                }
+            }
+
+
+        }
+        private void HandleCashier(DataRow row) {
+            int quan = (int)row["Stock"];
+
+            if ((int)row["Stock"] == 0) {
+                MessageBox.Show("This item is out of stock!");
+                return;
+            }
+            ItemsCart.Instance.AddPhoneToCart(row);
         }
 
         

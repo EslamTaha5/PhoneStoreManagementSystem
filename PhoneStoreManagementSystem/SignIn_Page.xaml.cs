@@ -58,9 +58,10 @@ namespace PhoneStoreManagementSystem {
                 }
 
                 MessageBox.Show("Signed in successfully!");
-         
-                Home home = new Home((string)dt.Rows[0]["fName"]+' ' + (string)dt.Rows[0]["sName"]);
                 Home.ID = int.Parse(inputUserName);
+               
+                Home.IsAdmin = ((bool)dt.Rows[0]["IsAdmin"] == true);
+                Home home = new Home((string)dt.Rows[0]["fName"]+' ' + (string)dt.Rows[0]["sName"]);
                 home.Show();
                 this.Close();
 

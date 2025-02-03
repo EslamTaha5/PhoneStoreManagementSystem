@@ -69,6 +69,26 @@
                         Orientation="Vertical"
                         HorizontalAlignment="Center"
                         Width="{Binding ActualWidth, ElementName=dpLeftBar}">
+
+                <Border BorderBrush="Black"
+                        Visibility="Collapsed"
+                        Name="AddPhoneBox"
+                        BorderThickness="1">
+                    <Button Content="Add New Phone"
+                            Style="{StaticResource sbarButtons}"
+                            Click="AddNewPhone" />
+                </Border>
+
+                <Border BorderBrush="Black"
+                        Visibility="Collapsed"
+                        Name ="EditPhoneBox"
+                        BorderThickness="1">
+                    <Button Content="Edit Phone"
+                            
+                            Style="{StaticResource sbarButtons}"
+                            Click="EditPhone" />
+                </Border>
+
                 <Border BorderBrush="Black"
                         BorderThickness="1">
                     <Button Content="Phones"
