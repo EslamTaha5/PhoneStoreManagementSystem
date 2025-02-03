@@ -88,7 +88,6 @@ namespace PhoneStoreManagementSystem
                         && grid.SelectedItem != null 
                         && grid.SelectedItems.Count == 1) {
 
-
                         DataRow row = (grid.SelectedItem as DataRowView).Row;
 
                         if(Home.IsAdmin)HandleAdmin(row);

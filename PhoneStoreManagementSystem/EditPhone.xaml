@@ -95,6 +95,7 @@
 
             <!-- ComboBox fills the remaining space -->
             <Label Name="ramLabel"
+                   Style="{StaticResource lStyle}"
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Center"
                    Grid.Column="1" />

@@ -30,7 +30,7 @@ namespace PhoneStoreManagementSystem {
         private void PreviewText(object sender, TextCompositionEventArgs e) {
             Common.PreviewTextInput(sender, e);
         }
-
+        
         private void PasteText(object sender, DataObjectPastingEventArgs e) {
             Common.BoxPasting(sender, e);
         }
