@@ -1,0 +1,100 @@
+-- Check if the database exists and create it if not
+IF DB_ID('PhoneStore') IS NULL
+BEGIN
+    CREATE DATABASE PhoneStore;
+END
+
+USE PhoneStore;
+GO
+
+-- Cashier Table
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Cashier' AND TABLE_SCHEMA = 'dbo')
+BEGIN
+    CREATE TABLE Cashier (
+        ID INT PRIMARY KEY NOT NULL,
+        fName NVARCHAR(30) NOT NULL,
+        sName NVARCHAR(30) NOT NULL,
+        IsAdmin BIT NOT NULL,
+        HireDate DATE NOT NULL,
+        Password NVARCHAR(128) NOT NULL
+    );
+END
+GO
+
+-- Customer Table
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Customer' AND TABLE_SCHEMA = 'dbo')
+BEGIN
+    CREATE TABLE Customer (
+        ID INT PRIMARY KEY NOT NULL,
+        Name NVARCHAR(30) NOT NULL,
+        Pnum INT NOT NULL
+    );
+END
+GO
+
+-- Phones Table
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Phones' AND TABLE_SCHEMA = 'dbo')
+BEGIN
+    CREATE TABLE Phones (
+        Brand NVARCHAR(30) NOT NULL,
+        Model NVARCHAR(30) NOT NULL,
+        Ram INT NOT NULL,
+        Storage INT NOT NULL,
+        Name VARCHAR(50) NOT NULL,
+        Price INT NOT NULL,
+        Stock INT NOT NULL,
+        PRIMARY KEY (Brand, Model)
+    );
+END
+GO
+
+-- Transactions Table
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Transactions' AND TABLE_SCHEMA = 'dbo')
+BEGIN
+    CREATE TABLE Transactions (
+        Trans_ID INT PRIMARY KEY NOT NULL,
+        Cus_ID INT NOT NULL,
+        Cash_ID INT NOT NULL,
+        Time DATETIME NOT NULL,
+        Total INT NOT NULL,
+        FOREIGN KEY (Cus_ID) REFERENCES Customer(ID),
+        FOREIGN KEY (Cash_ID) REFERENCES Cashier(ID)
+    );
+END
+GO
+
+-- Transaction Details Table
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Transaction_Details' AND TABLE_SCHEMA = 'dbo')
+BEGIN
+    CREATE TABLE Transaction_Details (
+        Trans_ID INT NOT NULL,
+        Brand NVARCHAR(30) NOT NULL,
+        Model NVARCHAR(30) NOT NULL,
+        Serial NVARCHAR(30) NOT NULL,
+        Price INT NOT NULL,
+        PRIMARY KEY (Serial),
+        FOREIGN KEY (Trans_ID) REFERENCES Transactions(Trans_ID),
+        FOREIGN KEY (Brand, Model) REFERENCES Phones(Brand, Model)
+    );
+END
+GO
+
+-- Use PhoneStore
+USE PhoneStore;
+
+
+-- Insert data into Cashier
+INSERT INTO Cashier(ID, fName, sName, HireDate, Password, IsAdmin)
+VALUES 
+    (4728, 'User', '1', '2024-04-12', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', 0),
+    (145, 'Admin', '1', '2023-04-12', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', 1);
+
+-- Insert data into Phones
+INSERT INTO Phones(Brand, Model, Ram, Storage, Name, Price, Stock)
+VALUES
+    ('Samsung', 'SM-S921', 128, 256, 'Galaxy S24 Ultra', 66000, 0),
+    ('Samsung', 'SM-S921', 256, 512, 'Galaxy S24 Ultra', 70000, 0),
+    ('Samsung', 'SM-A165', 128, 8, 'Galaxy A16', 10000, 0),
+    ('Xiaomi', '2312DR', 128, 6, 'Redmi Note 13', 12000, 0),
+    ('Apple', 'A3287', 128, 8, 'iPhone 16', 80000, 0),
+    ('Oppo', 'CPH2625', 256, 8, 'Reno12', 20000, 0);
