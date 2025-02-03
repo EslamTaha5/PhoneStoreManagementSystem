@@ -10,14 +10,18 @@ namespace PhoneStoreManagementSystem {
     public partial class Home : Window {
         private int lastChoice;
         public static int ID { get; set; }
+        public static bool IsAdmin { get; set; }
         private readonly DispatcherTimer timer;
 
         public Home(string userName) {
             InitializeComponent();
             LoadData();
-            SetUserName(userName);
-            
 
+            SetUserName(userName);
+            if (IsAdmin) {
+                AdminMode();
+            }
+            Console.WriteLine(IsAdmin);
             timer = new DispatcherTimer {
                 Interval = TimeSpan.FromSeconds(1)
             };
@@ -53,15 +57,24 @@ namespace PhoneStoreManagementSystem {
             lastChoice = choice;
             LoadPage(page);
         }
+        private void AdminMode() {
+            AddPhoneBox.Visibility = Visibility.Visible;
+            EditPhoneBox.Visibility = Visibility.Visible;
+            EditPhoneBox.Visibility = Visibility.Visible;
+        }
+        private void AddNewPhone(object sender, RoutedEventArgs e) => TryLoadPage(1, new AddNewPhone());
+        
+        private void EditPhone(object sender, RoutedEventArgs e) => TryLoadPage(2, new EditPhone());
 
-        private void Phones(object sender, RoutedEventArgs e) => TryLoadPage(1, new ShowPhones());
+        private void Phones(object sender, RoutedEventArgs e) => TryLoadPage(3, new ShowPhones());
 
-        private void Restock(object sender, RoutedEventArgs e) => TryLoadPage(2, new ReStock());
+        private void Restock(object sender, RoutedEventArgs e) => TryLoadPage(4, new ReStock());
 
-        private void MyDetails(object sender, RoutedEventArgs e) => TryLoadPage(3, new MyDetails());
+        private void MyDetails(object sender, RoutedEventArgs e) => TryLoadPage(5, new MyDetails());
 
-        private void Cart(object sender, RoutedEventArgs e) => TryLoadPage(4, new Cart());
+        private void Cart(object sender, RoutedEventArgs e) => TryLoadPage(6, new Cart());
 
-        private void TransactionDetails(object sender, RoutedEventArgs e) => TryLoadPage(5, new TransactionDetails());
+        private void TransactionDetails(object sender, RoutedEventArgs e) => TryLoadPage(7, new TransactionDetails());
+
     }
 }
